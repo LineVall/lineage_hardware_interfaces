@@ -927,14 +927,11 @@ bool CameraDeviceSession::preProcessConfigurationLocked(
             mCirculatingBuffers.emplace(stream.mId, CirculatingBuffers{});
         } else {
             // width/height must not change, but usage/rotation might need to change
-            // format might change and get updated with overrideFormat if TARGET_CAMERA_USES_NEWER_HIDL_OVERRIDE_FORMAT = true
+            // format might change and get updated with overrideFormat
             if (mStreamMap[id].stream_type !=
                     (int) requestedConfiguration.streams[i].streamType ||
                     mStreamMap[id].width != requestedConfiguration.streams[i].width ||
                     mStreamMap[id].height != requestedConfiguration.streams[i].height ||
-#ifndef TARGET_CAMERA_USES_NEWER_HIDL_OVERRIDE_FORMAT
-                    mStreamMap[id].format != (int) requestedConfiguration.streams[i].format ||
-#endif
                     mStreamMap[id].data_space !=
                             mapToLegacyDataspace( static_cast<android_dataspace_t> (
                                     requestedConfiguration.streams[i].dataSpace))) {
